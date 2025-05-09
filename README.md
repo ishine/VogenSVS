@@ -4,6 +4,7 @@ An SVS (Singing Voice Synthesis) toolset. Some parts are still under constructio
 
 Completion status:
 - [x] (Vocoder) **VocV1(VogenVoc)** [[Demo Code]](tests/vocv1_demo.ipynb) [[Demo Page]](https://aqtq314.github.io/VogenSVS/VocoderV01/)
+  - Breathiness Generator Model [[Train Code]](https://github.com/aqtq314/VocV1-BreathGen)
 - [ ] (Acoustic Model)
 - [ ] (Duration Model)
 
