@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SDV Demo Page</title>
+  <!-- Style source: https://github.com/simonlc/Markdown-CSS -->
+  <style>
+    html {
+      font-size: 100%;
+      overflow-y: scroll;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    body {
+      color: #444;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+      font-size: 16px;
+      line-height: 1.5em;
+      padding: 1em;
+      margin: auto;
+      max-width: 1000px;
+      background: #fefefe;
+    }
+
+    .subtitle {
+      text-align: center;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-weight: normal;
+      color: #111;
+      line-height: 1em;
+      width: 100%;
+    }
+
+    .separator {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      font-weight: 700;
+      font-size: 80%;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 80px;
+      margin-bottom: 80px;
+      color: #0005;
+    }
+
+    .separator::before,
+    .separator::after {
+      content: '';
+      flex: 1;
+      border-top: 2px solid #0003;
+      border-bottom: 2px solid #0003;
+      height: 1.5px;
+    }
+
+    .separator:not(:empty)::before {
+      margin-right: 1em;
+    }
+
+    .separator:not(:empty)::after {
+      margin-left: 1em;
+    }
+
+
+    h1 {
+      margin-top: 100px;
+      font-size: 3em;
+      font-weight: normal;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2em;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 1.5em;
+    }
+
+    .figure {
+      text-align: center;
+      width: 468px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .caption {
+      margin-top: 0.5em;
+      text-align: left;
+    }
+
+    .linspec-group-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .linspec-item-container {
+      max-width: 480px;
+      margin: 0 5px 20px 5px;
+      display: inline-block;
+      color: black;
+      text-align: center;
+      line-height: 1em;
+    }
+
+    .linspec-image-item {
+      width: 480px;
+      height: 150px;
+    }
+
+    .linspec-caption {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .linspec-caption-sub1 {
+      font-size: 1.5em;
+      font-weight: normal;
+    }
+
+    .linspec-caption-sub2 {
+      font-size: 0.8em;
+      font-weight: normal;
+    }
+
+    .audio-group-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .audio-item-container {
+      max-width: 300px;
+      margin: 0 5px 20px 5px;
+      display: inline-block;
+      color: black;
+      text-align: center;
+      line-height: 1em;
+    }
+
+    .audio-item {
+      width: 300px;
+    }
+
+    .audio-caption {
+      font-size: 1em;
+      font-weight: bold;
+    }
+
+    .audio-caption-sub1 {
+      font-size: 1em;
+      font-weight: normal;
+    }
+
+    .audio-caption-sub2 {
+      font-size: 0.8em;
+      font-weight: normal;
+    }
+
+    .table-scrollview-container {
+      overflow: auto;
+    }
+
+    table {
+      border-spacing: 0;
+      line-height: 1;
+    }
+
+    /* Frozen top row */
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: white;
+      line-height: 1;
+    }
+
+    /* Frozen first column */
+    tbody tr td:first-child,
+    thead tr th:first-child {
+      position: sticky;
+      left: -100px;
+      z-index: 5;
+      background-color: white;
+      text-align: right;
+      min-width: 200px;
+      line-height: 0.9;
+      padding-right: 6px;
+    }
+
+    /* Corner cell (intersection of frozen row and column) */
+    thead tr th:first-child {
+      z-index: 11;
+      background-color: white;
+      text-align: left;
+      vertical-align: top;
+      font-size: 1.5em;
+    }
+
+    @media only screen and (min-width: 480px) {
+
+      tbody tr td:first-child,
+      thead tr th:first-child {
+        left: -50px;
+      }
+    }
+
+    @media only screen and (min-width: 768px) {
+
+      tbody tr td:first-child,
+      thead tr th:first-child {
+        left: 0;
+      }
+    }
+  </style>
+  <script src="../libs/vue@3.4.35/vue.global.prod.js"></script>
+  <script type="module">
+    const app = Vue.createApp({
+      data() {
+        return {
+          sampleItems: [
+            { sampleName: 'CY BSZ XGG 341+15'.trimEnd(), sampleType: 'Opera (Dan)' },
+            { sampleName: 'JX MGYGS 205+15  '.trimEnd(), sampleType: 'Opera (Dan)' },
+            { sampleName: 'BA FK 108+15     '.trimEnd(), sampleType: 'Pop (Female)' },
+            { sampleName: 'DA SXQN 004+15   '.trimEnd(), sampleType: 'Pop (Female)' },
+            { sampleName: 'EU NSN 017+15    '.trimEnd(), sampleType: 'Pop (Female)' },
+            { sampleName: 'BW ZXWDTYS 003+15'.trimEnd(), sampleType: 'Pop (Male)' },
+            { sampleName: 'DH BMG 024+15    '.trimEnd(), sampleType: 'Pop (Male)' },
+            { sampleName: 'SS CQ 220+15     '.trimEnd(), sampleType: 'Pop (Male)' },
+          ],
+          tableTypes: [
+            { label: 'No F0 Input', filePartKey: 'filePartNoF0' },
+            { label: 'With F0 Input', filePartKey: 'filePartWithF0' }
+          ],
+          comparisonVocoders: {
+            title: 'Vocoder Comparison',
+            configItems: [
+              { filePartNoF0: 'GT         '.trimEnd(), filePartWithF0: 'GT         '.trimEnd(), captionLeft: '', caption: 'GT', isProposed: 0, captionBelow: '' },
+              { filePartNoF0: 'NoF0 HiFi  '.trimEnd(), filePartWithF0: 'W_F0 HiFi  '.trimEnd(), captionLeft: '', caption: 'HiFi-GAN', isProposed: 0, captionBelow: '(GAN)' },
+              { filePartNoF0: 'NoF0 Voco  '.trimEnd(), filePartWithF0: 'W_F0 Voco  '.trimEnd(), captionLeft: '', caption: 'Vocos', isProposed: 0, captionBelow: '(GAN)' },
+              { filePartNoF0: 'NoF0 DifW  '.trimEnd(), filePartWithF0: 'W_F0 DifW  '.trimEnd(), captionLeft: '', caption: 'DiffWave', isProposed: 0, captionBelow: '(DDPM w/ 50 steps)' },
+              { filePartNoF0: 'NoF0 FreG  '.trimEnd(), filePartWithF0: 'W_F0 FreG  '.trimEnd(), captionLeft: '', caption: 'FreGrad', isProposed: 0, captionBelow: '(DDPM w/ 50 steps)' },
+              { filePartNoF0: 'NoF0 SDV GL'.trimEnd(), filePartWithF0: 'W_F0 SDV GL'.trimEnd(), captionLeft: '', caption: 'SDV[M]→FGLA', isProposed: 1, captionBelow: '(DPM++2MKarras w/ 50 steps)' },
+            ],
+          },
+          comparisonPhaseRecovery: {
+            title: 'Phase Recovery Comparison',
+            configItems: [
+              { filePartNoF0: 'GT          '.trimEnd(), filePartWithF0: 'GT          '.trimEnd(), captionLeft: '', caption: 'GT', isProposed: 0, captionBelow: '' },
+              { filePartNoF0: 'NoF0 SDV-M+P'.trimEnd(), filePartWithF0: 'W_F0 SDV-M+P'.trimEnd(), captionLeft: '', caption: 'SDV[M, P]', isProposed: 0, captionBelow: '(DPM++2MKarras w/ 50 steps)' },
+              { filePartNoF0: 'NoF0 SDV VV '.trimEnd(), filePartWithF0: 'W_F0 SDV VV '.trimEnd(), captionLeft: 'SDV[M]', caption: '→VogenVocV1Br', isProposed: 0, captionBelow: '(GAN)' },
+              { filePartNoF0: 'NoF0 SDV DP '.trimEnd(), filePartWithF0: 'W_F0 SDV DP '.trimEnd(), captionLeft: 'SDV[M]', caption: '→SDV[P]', isProposed: 0, captionBelow: '(DPM++2MKarras w/ 50 steps)' },
+              { filePartNoF0: 'NoF0 SDV GL '.trimEnd(), filePartWithF0: 'W_F0 SDV GL '.trimEnd(), captionLeft: 'SDV[M]', caption: '→FGLA', isProposed: 1, captionBelow: '(100 FGLA iterations)' },
+            ],
+          },
+          comparisonPhaseRecoveryInputFps: {
+            title: 'Phase Recovery Input FPS Comparison',
+            configItems: [
+              { filePartNoF0: 'NoF0 SDV DP-Fps050'.trimEnd(), filePartWithF0: 'W_F0 SDV DP-Fps050'.trimEnd(), captionLeft: '… ', caption: '→ (50 fps) SDV[P]', isProposed: 0, captionBelow: '(DPM++2MKarras w/ 50 steps)' },
+              { filePartNoF0: 'NoF0 SDV DP-Fps100'.trimEnd(), filePartWithF0: 'W_F0 SDV DP-Fps100'.trimEnd(), captionLeft: '… ', caption: '→ (100 fps) SDV[P]', isProposed: 0, captionBelow: '(DPM++2MKarras w/ 50 steps)' },
+              { filePartNoF0: 'NoF0 SDV DP       '.trimEnd(), filePartWithF0: 'W_F0 SDV DP       '.trimEnd(), captionLeft: '… ', caption: '→ (200 fps) SDV[P]', isProposed: 0, captionBelow: '(DPM++2MKarras w/ 50 steps)' },
+              { filePartNoF0: 'NoF0 SDV GL-Fps050'.trimEnd(), filePartWithF0: 'W_F0 SDV GL-Fps050'.trimEnd(), captionLeft: '… ', caption: '→ (50 fps) FGLA', isProposed: 0, captionBelow: '(100 FGLA iterations)' },
+              { filePartNoF0: 'NoF0 SDV GL-Fps100'.trimEnd(), filePartWithF0: 'W_F0 SDV GL-Fps100'.trimEnd(), captionLeft: '… ', caption: '→ (100 fps) FGLA', isProposed: 0, captionBelow: '(100 FGLA iterations)' },
+              { filePartNoF0: 'NoF0 SDV GL       '.trimEnd(), filePartWithF0: 'W_F0 SDV GL       '.trimEnd(), captionLeft: '… ', caption: '→ (200 fps) FGLA', isProposed: 1, captionBelow: '(100 FGLA iterations)' },
+            ],
+          },
+        };
+      },
+      methods: {
+        getAudioSrc(sampleName, filePart) {
+          return `out-webassets/${filePart} ${sampleName}.opus`;
+        },
+      },
+      mounted() {
+        const lazyLoad = (entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const element = entry.target;
+              if (element.tagName === 'IMG' || element.tagName === 'AUDIO') {
+                element.src = element.dataset.src;
+                observer.unobserve(element);
+              }
+            }
+          });
+        };
+
+        this.$nextTick(() => {
+          const syncDivs = document.querySelectorAll('.table-scrollview-container');
+          syncDivs.forEach(div => {
+            div.addEventListener('scroll', function () {
+              syncDivs.forEach(otherDiv => {
+                if (otherDiv !== div) {
+                  otherDiv.scrollLeft = div.scrollLeft;
+                  otherDiv.scrollTop = div.scrollTop;
+                }
+              });
+            });
+          });
+        });
+
+        const observer = new IntersectionObserver(lazyLoad, {
+          rootMargin: '0px 0px 50px 0px',
+          threshold: 0.01
+        });
+
+        document.querySelectorAll('img[data-src], audio[data-src]').forEach(element => {
+          observer.observe(element);
+        });
+
+        const audios = document.querySelectorAll('audio');
+        audios.forEach(audio => {
+          audio.addEventListener('play', () => {
+            audios.forEach(otherAudio => {
+              if (otherAudio !== audio) {
+                otherAudio.pause();
+              }
+            });
+          });
+        });
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</head>
+
+<body id="app">
+  <h1>Spectral Diffusion Vocoder for High-Fidelity Pitch-Accurate Singing Voice Synthesis</h1>
+
+  <p>&nbsp;</p>
+
+  <p><b>Abstract</b>
+    While generative adversarial networks (GANs) currently dominate vocoder design for singing voice synthesis, denoising diffusion probabilistic models (DDPMs) have shown potential but lag in audio quality. Different from existing diffusion vocoders that typically adopt end-to-end waveform generation conditioned on Mel spectrograms, this paper draws inspiration from recent advancements in GAN-based vocoders that incorporated explicit inverse Short-Time Fourier Transform into their generators, and proposes a novel two-stage diffusion-based vocoder that decouples magnitude spectrogram synthesis from phase recovery. Specifically, our diffusion model generates full-resolution log magnitude spectrogram at high frame rate, intentionally introducing spectral redundancy to simplify phase estimation. This design enables conventional phase recovery algorithms like Griffin-Lim to perform competitively against learned neural phase estimators. Evaluations demonstrate that this streamlined method outperforms existing diffusion vocoders in both audio quality and inference speed by a large margin, while also surpassing GAN-based counterparts in pitch accuracy and audio similarity, especially when handling high-pitched data like opera.
+  </p>
+
+  <p>&nbsp;</p>
+
+  <template v-for="comparison in [comparisonVocoders, comparisonPhaseRecovery, comparisonPhaseRecoveryInputFps]">
+
+
+    <div class="separator"> Separator </div>
+
+    <!-- <h2>Vocoder Comparison</h2> -->
+    <h2>{{ comparison.title }}</h2>
+
+    <template v-for="tableType in tableTypes" :key="tableType.label">
+      <p>&nbsp;</p>
+      <h3>{{ tableType.label }}</h3>
+      <div class="table-scrollview-container">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th v-for="sampleItem in sampleItems" :key="`th-${sampleItem.sampleName}`">
+                <span class="audio-caption"> {{ sampleItem.sampleType }} </span> <br>
+                <span class="audio-caption-sub2"> Audio ID: "{{ sampleItem.sampleName }}" </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="configItem in comparison.configItems" :key="`tr-${configItem[tableType.filePartKey]}`">
+              <td>
+                <span v-if="configItem.isProposed" class="audio-caption"> (Proposed) <br> </span>
+                <span class="audio-caption-sub1"> {{ configItem.captionLeft }} </span>
+                <span class="audio-caption"> {{ configItem.caption }} </span><br>
+                <span class="audio-caption-sub2"> {{ configItem.captionBelow }} </span>
+              </td>
+              <td v-for="sampleItem in sampleItems" :key="`td-${sampleItem.sampleName}-${configItem[tableType.filePartKey]}`">
+                <audio class="audio-item" controls :data-src="getAudioSrc(sampleItem.sampleName, configItem[tableType.filePartKey])"></audio>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </template>
+  </template>
+
+  <div class="separator"> End of Page </div>
+
+  <div style="height: 500px;"></div>
+</body>
+
+</html>
